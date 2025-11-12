@@ -1,0 +1,61 @@
+.admin-wrapper {
+  font-family: Arial, sans-serif;
+  background: #eef1f7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-header {
+  background: #1a252f;
+  color: white;
+  padding: 20px;
+}
+
+.admin-header h1 {
+  margin: 0;
+}
+
+.admin-nav {
+  background: #2c3e50;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.nav-links button,
+.nav-actions button {
+  color: white;
+  margin-right: 15px;
+  text-decoration: none;
+  font-size: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-links button:hover,
+.nav-actions button:hover {
+  text-decoration: underline;
+}
+
+.admin-main {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-footer {
+  text-align: center;
+  color: #777;
+  padding: 10px;
+  font-size: 14px;
+}
