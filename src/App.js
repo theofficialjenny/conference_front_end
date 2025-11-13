@@ -16,6 +16,7 @@ import ManageReservations from './pages/ManageReservations';
 function App() {
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   const handleLogout = () => {
     localStorage.removeItem('access');
@@ -29,12 +30,11 @@ function App() {
     setUser(userData);
   };
 
-  // Fetch current user
   useEffect(() => {
     const token = localStorage.getItem('access');
     if (token) {
       axios
-        .get('http://127.0.0.1:8000/api/me/', {
+        .get(`${API_BASE_URL}me/`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data))
@@ -45,12 +45,11 @@ function App() {
     }
   }, []);
 
-  // Fetch notifications once user is loaded
   useEffect(() => {
     const token = localStorage.getItem('access');
     if (user && token) {
       axios
-        .get('http://127.0.0.1:8000/api/notifications/', {
+        .get(`${API_BASE_URL}notifications/`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setNotifications(res.data))
