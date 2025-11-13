@@ -7,16 +7,16 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
+
 
   const submit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/login/', {
-        username,
-        password,
-      });
+      const res = await axios.post(`${API_BASE_URL}login/`, { username, password });
+
 
       localStorage.setItem('access', res.data.access);
       localStorage.setItem('refresh', res.data.refresh);
