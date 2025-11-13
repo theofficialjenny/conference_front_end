@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = "https://conference-room-six.vercel.app/api" || 'http://127.0.0.1:8000/api/';
+const API_BASE_URL = "https://conference-front-end-alpha.vercel.app/api" || 'http://127.0.0.1:8000/api/';
 
 export const getRooms = () => axios.get(`${API_BASE_URL}rooms/`);
 export const getReservations = () => axios.get(`${API_BASE_URL}reservations/`);
