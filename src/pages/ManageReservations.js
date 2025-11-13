@@ -7,13 +7,14 @@ function ManageReservations() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   const token = localStorage.getItem('access');
   const headers = { Authorization: `Bearer ${token}` };
 
   const getReservations = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:8000/api/reservations/', { headers });
+      const res = await axios.get(`${API_BASE_URL}reservations/`, { headers });
       setReservations(res.data);
     } catch (err) {
       console.error(err);
@@ -25,7 +26,7 @@ function ManageReservations() {
 
   const getRooms = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:8000/api/rooms/', { headers });
+      const res = await axios.get(`${API_BASE_URL}rooms/`, { headers });
       setRooms(res.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +41,7 @@ function ManageReservations() {
   const cancel = async (id) => {
     if (!window.confirm('Are you sure you want to cancel this reservation?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/reservations/${id}/`, { headers });
+      await axios.delete(`${API_BASE_URL}reservations/${id}/`, { headers });
       setReservations(reservations.filter(r => r.id !== id));
     } catch {
       alert('Error canceling reservation.');

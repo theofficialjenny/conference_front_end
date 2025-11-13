@@ -8,6 +8,7 @@ function MyReservations() {
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({ date: '', start_time: '', end_time: '' });
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   const token = localStorage.getItem('access');
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function MyReservations() {
   useEffect(() => {
     const allReservations = async () => {
       try {
-        const res = await axios.get('http://127.0.0.1:8000/api/reservations/', {
+        const res = await axios.get(`${API_BASE_URL}reservations/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setReservations(res.data);
@@ -33,7 +34,7 @@ function MyReservations() {
   const cancelRes = async (reservationId) => {
     if (!window.confirm('Are you sure you want to cancel this reservation?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/reservations/${reservationId}/`, {
+      await axios.delete(`${API_BASE_URL}reservations/${reservationId}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setReservations(reservations.filter((r) => r.id !== reservationId));
@@ -64,7 +65,7 @@ function MyReservations() {
       };
 
       await axios.put(
-        `http://127.0.0.1:8000/api/reservations/${reservationId}/`,
+        `${API_BASE_URL}reservations/${reservationId}/`,
         updated,
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -6,6 +6,7 @@ function ManageRooms() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   const [newRoom, setNewRoom] = useState({
     name: '',
@@ -27,7 +28,7 @@ function ManageRooms() {
 
   const getRooms = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:8000/api/rooms/', { headers });
+      const res = await axios.get(`${API_BASE_URL}rooms/`, { headers });
       setRooms(res.data);
     } catch (err) {
       console.error(err);
@@ -44,7 +45,7 @@ function ManageRooms() {
   const addRoom = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/api/rooms/', newRoom, { headers });
+      await axios.post(`${API_BASE_URL}rooms/`, newRoom, { headers });
       setNewRoom({ name: '', capacity: '', location: '', description: '' });
       getRooms();
     } catch (err) {
@@ -56,7 +57,7 @@ function ManageRooms() {
   const deleteRoom = async (id) => {
     if (!window.confirm('Are you sure you want to delete this room?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/rooms/${id}/`, { headers });
+      await axios.delete(`${API_BASE_URL}rooms/${id}/`, { headers });
       setRooms(rooms.filter(room => room.id !== id));
     } catch {
       alert('Error deleting room.');
@@ -71,7 +72,7 @@ function ManageRooms() {
   const editRoom = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://127.0.0.1:8000/api/rooms/${editRoomId}/`, editRoomData, { headers });
+      await axios.put(`${API_BASE_URL}rooms/${editRoomId}/`, editRoomData, { headers });
       setEditRoomId(null);
       getRooms();
     } catch (err) {

@@ -6,6 +6,7 @@ function AdminManageUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   const [newUser, setNewUser] = useState({
     username: '',
@@ -28,7 +29,7 @@ function AdminManageUsers() {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:8000/api/users/', { headers });
+      const res = await axios.get(`${API_BASE_URL}users/`, { headers });
       setUsers(res.data);
     } catch (err) {
       console.error(err.response?.data || err.message);
@@ -45,7 +46,7 @@ function AdminManageUsers() {
   const addUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/api/users/', newUser, { headers });
+      await axios.post(`${API_BASE_URL}users/`, newUser, { headers });
       setNewUser({ username: '', email: '', password: '', is_staff: false });
       getUsers();
     } catch (err) {
@@ -57,7 +58,7 @@ function AdminManageUsers() {
   const deleteUser = async (id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/users/${id}/`, { headers });
+      await axios.delete(`${API_BASE_URL}users/${id}/`, { headers });
       setUsers(users.filter(user => user.id !== id));
     } catch {
       alert('Error deleting user.');
@@ -79,7 +80,7 @@ function AdminManageUsers() {
     try {
       const data = { ...editUserData };
       if (!data.password) delete data.password;
-      await axios.put(`http://127.0.0.1:8000/api/users/${editUserId}/`, data, { headers });
+      await axios.put(`${API_BASE_URL}users/${editUserId}/`, data, { headers });
       setEditUserId(null);
       getUsers();
     } catch (err) {

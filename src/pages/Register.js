@@ -8,6 +8,7 @@ function Register({ onRegister }) {
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   const submit = async (e) => {
     e.preventDefault();
@@ -16,8 +17,11 @@ function Register({ onRegister }) {
       return;
     }
     try {
-      const res = await axios.post('http://127.0.0.1:8000/users/',
-          { username, password, password2 }, { headers: { 'Content-Type': 'application/json' } });
+      const res = await axios.post(
+        `${API_BASE_URL}users/`,
+        { username, password, password2 },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
       if (onRegister) onRegister(res.data);
       alert("Account created successfully!");
       navigate('/login');

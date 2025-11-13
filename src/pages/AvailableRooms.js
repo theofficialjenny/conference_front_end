@@ -7,12 +7,13 @@ function AvailableRooms() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const token = localStorage.getItem('access');
-  const navigate = useNavigate(); // <-- here
+  const navigate = useNavigate();
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
   useEffect(() => {
     const getRooms = async () => {
       try {
-        const res = await axios.get('http://127.0.0.1:8000/api/rooms/', {
+        const res = await axios.get(`${API_BASE_URL}rooms/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRooms(res.data);

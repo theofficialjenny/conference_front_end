@@ -10,10 +10,10 @@ function ReserveRoom() {
   const [endTime, setEndTime] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
   const token = localStorage.getItem('access');
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://conference-room-six.vercel.app/api/';
 
-  // Redirect if no token
+
   useEffect(() => {
     if (!token) {
       navigate('/login');
@@ -22,7 +22,7 @@ function ReserveRoom() {
 
     const getRoom = async () => {
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/rooms/${roomId}/`, {
+        const res = await axios.get(`${API_BASE_URL}rooms/${roomId}/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRoom(res.data);
@@ -45,7 +45,7 @@ function ReserveRoom() {
 
     try {
       await axios.post(
-        'http://127.0.0.1:8000/api/reservations/',
+        `${API_BASE_URL}reservations/`,
         {
           room: parseInt(roomId),
           date,
@@ -56,6 +56,7 @@ function ReserveRoom() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+
 
       navigate('/my-reservations');
     } catch (err) {
