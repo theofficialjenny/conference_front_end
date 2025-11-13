@@ -19,8 +19,8 @@ api.interceptors.request.use(
 // LOGIN
 export const login = async (username, password) => {
   const response = await api.post("login/", { username, password });
-  localStorage.setItem("access_token", response.data.access);
-  localStorage.setItem("refresh_token", response.data.refresh);
+  localStorage.setItem("access", response.data.access);
+  localStorage.setItem("refresh", response.data.refresh);
   return response.data.user;
 };
 
@@ -38,8 +38,8 @@ export const getCurrentUser = async () => {
 
 // LOGOUT
 export const logout = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
 };
 
 // ROOMS
